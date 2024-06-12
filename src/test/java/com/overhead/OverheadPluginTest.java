@@ -1,13 +1,14 @@
-package com.example;
+package com.overhead;
 
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;
 
-public class ExamplePluginTest
+public class OverheadPluginTest
 {
 	public static void main(String[] args) throws Exception
 	{
-		ExternalPluginManager.loadBuiltin(ExamplePlugin.class);
+		ExternalPluginManager.loadBuiltin(OverheadPlugin.class);
 		RuneLite.main(args);
 	}
+
 }
