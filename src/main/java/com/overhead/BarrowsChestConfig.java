@@ -6,5 +6,5 @@ import net.runelite.client.config.ConfigItem;
 
 @ConfigGroup("barrowschest")
 public interface BarrowsChestConfig extends Config {
-	
+
 }
