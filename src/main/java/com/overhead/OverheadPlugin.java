@@ -19,6 +19,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
+import java.io.InputStream;
 
 @Slf4j
 @PluginDescriptor(
@@ -127,16 +128,20 @@ public class OverheadPlugin extends Plugin
 
 	private void playSound(boolean hasBarrowsItem)
 	{
-		String soundFilePath = hasBarrowsItem ? "path/to/item_found_sound.wav" : "path/to/nothing_found_sound.wav";
+		String soundFilePath = hasBarrowsItem ? "path/to/item_found_sound.wav" : "/magic-conch-nothing.wav";
 		playSoundFile(soundFilePath);
 	}
 
 	private void playSoundFile(String soundFilePath)
 	{
-		try
+		try (InputStream audioSrc = getClass().getResourceAsStream(soundFilePath))
 		{
-			File soundFile = new File(soundFilePath);
-			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+			if (audioSrc == null) {
+				log.error("Sound file not found: " + soundFilePath);
+				return;
+			}
+
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioSrc);
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
 			clip.start();
@@ -145,5 +150,5 @@ public class OverheadPlugin extends Plugin
 		{
 			e.printStackTrace();
 		}
-	}
+}
 }
